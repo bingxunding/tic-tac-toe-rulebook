@@ -47,19 +47,23 @@ cls TicTacToeState:
         self.num_moves = 0
 
     # 检查指定玩家的三行、三列和两条对角线。
+
+    # 检查指定玩家的三行、三列和两条对角线
     fun HasLine(Int player) -> Bool {player == 0 or player == 1}:
-        let mark = PlayerToState(player)
-        let i = 0
-        while i < 3:
-            let row = i * 3
-            if self.board[row].value == mark.value and self.board[row + 1].value == mark.value and self.board[row + 2].value == mark.value:
-                return true
-            if self.board[i].value == mark.value and self.board[i + 3].value == mark.value and self.board[i + 6].value == mark.value:
-                return true
-            i = i + 1
-        if self.board[0].value == mark.value and self.board[4].value == mark.value and self.board[8].value == mark.value:
-            return true
-        return self.board[2].value == mark.value and self.board[4].value == mark.value and self.board[6].value == mark.value
+        let c = PlayerToState(player).value
+        # 三行
+        let row0 = self.board[0].value == c and self.board[1].value == c and self.board[2].value == c
+        let row1 = self.board[3].value == c and self.board[4].value == c and self.board[5].value == c
+        let row2 = self.board[6].value == c and self.board[7].value == c and self.board[8].value == c
+        # 三列
+        let col0 = self.board[0].value == c and self.board[3].value == c and self.board[6].value == c
+        let col1 = self.board[1].value == c and self.board[4].value == c and self.board[7].value == c
+        let col2 = self.board[2].value == c and self.board[5].value == c and self.board[8].value == c
+        # 两条对角线
+        let diag0 = self.board[0].value == c and self.board[4].value == c and self.board[8].value == c
+        let diag1 = self.board[2].value == c and self.board[4].value == c and self.board[6].value == c
+        return row0 or row1 or row2 or col0 or col1 or col2 or diag0 or diag1
+
 
     fun IsFull() -> Bool:
         return self.num_moves == 9
